@@ -5,3 +5,12 @@
 /.vs
 /HungryPizza/.vs/HungryPizza
 /HungryPizza/HungryPizza.API/obj
+/HungryPizza/HungryPizza.Application/obj
+/HungryPizza/HungryPizza.Application.DTO/obj/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Domain/obj
+/HungryPizza/HungryPizza.Domain.Core/obj
+/HungryPizza/HungryPizza.Domain.Services/obj
+/HungryPizza/HungryPizza.Infra.CrossCutting/obj
+/HungryPizza/HungryPizza.Infra.CrossCutting.IOC/obj
+/HungryPizza/HungryPizza.Infra.Data/obj/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Infra.Repository/obj
