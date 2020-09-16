@@ -14,3 +14,11 @@
 /HungryPizza/HungryPizza.Infra.CrossCutting.IOC/obj
 /HungryPizza/HungryPizza.Infra.Data/obj/Debug/netcoreapp3.1
 /HungryPizza/HungryPizza.Infra.Repository/obj
+/HungryPizza/HungryPizza.API/bin/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Domain/bin/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Domain.Core/bin/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Domain.Services/bin/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Infra.Data/bin/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Infra.Data/obj
+/HungryPizza/HungryPizza.Infra.CrossCutting.IOC/bin/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Infra.CrossCutting/bin/Debug/netcoreapp3.1
