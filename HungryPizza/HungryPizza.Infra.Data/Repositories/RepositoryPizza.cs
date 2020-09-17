@@ -29,10 +29,10 @@ namespace HungryPizza.Infra.Data.Repositories
 
         public async Task<bool> Delete(Guid id)
         {
-            var query = @"DELETE FROM PIZZA WHERE ID = {=id}";
+            var query = @"DELETE FROM PIZZA WHERE ID = @ID";
             using var connection = new SqlConnection(_connectionStrings.HungryPizzaDB);
 
-            return (await connection.ExecuteAsync(query, new { id })) > 0;
+            return (await connection.ExecuteAsync(query, new { ID = id })) > 0;
         }
 
         public async Task<IEnumerable<Pizza>> GetAll()

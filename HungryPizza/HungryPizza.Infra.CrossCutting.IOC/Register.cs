@@ -1,4 +1,6 @@
 ﻿using HungryPizza.Domain.Core.Interfaces.Repositories;
+using HungryPizza.Domain.Core.Interfaces.Services;
+using HungryPizza.Domain.Services.Services;
 using HungryPizza.Infra.Data.Common;
 using HungryPizza.Infra.Data.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -11,9 +13,13 @@ namespace HungryPizza.Infra.CrossCutting.IOC
     {
         public static void AddServices(this IServiceCollection services)
         {
+            //Repository
             services.AddScoped<IRepositoryClient, RepositoryClient>();
             services.AddScoped<IRepositoryPizza, RepositoryPizza>();
             services.AddScoped<IRepositoryOrder, RepositoryOrder>();
+
+            //Service
+            services.AddScoped<IServiceClient, ServiceClient>();
         }
 
         public static void AddDbConfig(this IServiceCollection services, IConfiguration configuration)

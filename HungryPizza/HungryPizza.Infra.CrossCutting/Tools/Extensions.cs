@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HungryPizza.Infra.CrossCutting.Tools
 {
@@ -12,5 +13,12 @@ namespace HungryPizza.Infra.CrossCutting.Tools
                 action(item);
             }
         }
+
+        public static bool HasValue(this string value)
+        {
+            return !(string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value));
+        }
+
+        public static string OnlyNumbers(this string value) => value.HasValue() ? new string(value.Where(c => char.IsNumber(c)).ToArray()) : string.Empty;
     }
 }

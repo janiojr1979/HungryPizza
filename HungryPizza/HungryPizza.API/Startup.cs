@@ -1,9 +1,14 @@
+using AutoMapper;
+using FluentValidation.AspNetCore;
+using HungryPizza.API.Common;
+using HungryPizza.API.Validators;
 using HungryPizza.Infra.CrossCutting.IOC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace HungryPizza.API
 {
@@ -19,9 +24,20 @@ namespace HungryPizza.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(AutoMapping));
             services.AddServices();
             services.AddDbConfig(Configuration);
             services.AddControllers();
+
+            //swagger
+            services.AddSwaggerGen();
+
+            //Validators
+            services.AddMvc()
+                    .AddFluentValidation(fv =>
+                    {
+                        fv.RegisterValidatorsFromAssembly(Assembly.GetAssembly(typeof(RequestClientValidator)));
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,6 +47,14 @@ namespace HungryPizza.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hungry Pizza API V1");
+                c.RoutePrefix = "swagger";
+            });
 
             app.UseHttpsRedirection();
 

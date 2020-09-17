@@ -28,22 +28,22 @@ namespace HungryPizza.Infra.Data.Repositories
 
         public async Task<bool> Delete(Guid id)
         {
-            var query = @"DELETE FROM CLIENT WHERE ID = {=id}";
+            var query = @"DELETE FROM CLIENT WHERE ID = @ID";
             using var connection = new SqlConnection(_connectionStrings.HungryPizzaDB);
 
-            return (await connection.ExecuteAsync(query, new { id })) > 0;
+            return (await connection.ExecuteAsync(query, new { ID = id })) > 0;
         }
 
         public async Task<Client> Get(string email)
         {
             using var connection = new SqlConnection(_connectionStrings.HungryPizzaDB);
-            return await connection.QueryFirstOrDefaultAsync<Client>("SELECT TOP 1 * FROM CLIENT (NOLOCK) WHERE EMAIL = {=email}", new { email });
+            return await connection.QueryFirstOrDefaultAsync<Client>("SELECT TOP 1 * FROM CLIENT (NOLOCK) WHERE EMAIL = @EMAIL", new { EMAIL = email });
         }
 
         public async Task<Client> Get(Guid id)
         {
             using var connection = new SqlConnection(_connectionStrings.HungryPizzaDB);
-            return await connection.QueryFirstOrDefaultAsync<Client>("SELECT TOP 1 * FROM CLIENT (NOLOCK) WHERE ID = {=id}", new { id });
+            return await connection.QueryFirstOrDefaultAsync<Client>("SELECT TOP 1 * FROM CLIENT (NOLOCK) WHERE ID = @ID", new { ID = id });
         }
 
         public async Task<bool> Update(Client client)

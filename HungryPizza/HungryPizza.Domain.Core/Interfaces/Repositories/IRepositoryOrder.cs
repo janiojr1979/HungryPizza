@@ -13,6 +13,8 @@ namespace HungryPizza.Domain.Core.Interfaces.Repositories
 
         Task<bool> Add(Order order);
 
+        Task<bool> AddNoRegister(Order order);
+
         Task<bool> Update(Order order);
 
         Task<bool> Delete(Guid id);
