@@ -4,5 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HungryPizza.Infra.CrossCutting.IOC\HungryPizza.Infra.CrossCutting.IOC.csproj" />
+  </ItemGroup>
+
 
 </Project>

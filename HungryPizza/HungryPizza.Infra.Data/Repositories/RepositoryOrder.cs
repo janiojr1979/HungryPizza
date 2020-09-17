@@ -20,6 +20,16 @@ namespace HungryPizza.Infra.Data.Repositories
             _connectionStrings = connectionStrings;
         }
 
+        public Task<bool> Add(Order order)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Delete(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Order> Get(Guid id)
         {
             var query = @"SELECT TOP 1 * FROM ORDER (NOLOCK) WHERE ID = {=id} ORDER BY 1
@@ -52,6 +62,11 @@ namespace HungryPizza.Infra.Data.Repositories
             orders.ForEach(o => o.Items = items.Where(i => i.OrderId == o.Id));
 
             return orders;
+        }
+
+        public Task<bool> Update(Order order)
+        {
+            throw new NotImplementedException();
         }
 
         private async Task<IEnumerable<OrderItem>> GetItems(Guid orderId)

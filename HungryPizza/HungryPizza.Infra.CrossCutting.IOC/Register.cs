@@ -16,7 +16,7 @@ namespace HungryPizza.Infra.CrossCutting.IOC
             services.AddScoped<IRepositoryOrder, RepositoryOrder>();
         }
 
-        public static void AddDatabaseInfo(this IServiceCollection services, IConfiguration configuration)
+        public static void AddDbConfig(this IServiceCollection services, IConfiguration configuration)
         {
             ConnectionStrings connectionStrings = new ConnectionStrings();
 
