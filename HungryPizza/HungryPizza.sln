@@ -25,7 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HungryPizza.Infra.CrossCutt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HungryPizza.Infra.CrossCutting.IOC", "HungryPizza.Infra.CrossCutting.IOC\HungryPizza.Infra.CrossCutting.IOC.csproj", "{59965E25-3FF9-4B80-9D57-C7B81900CE11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HungryPizza.Infra.Data", "HungryPizza.Infra.Data\HungryPizza.Infra.Data.csproj", "{DD4665BE-7AD5-4926-A8DD-BFACDDB9ED37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HungryPizza.Infra.Data", "HungryPizza.Infra.Data\HungryPizza.Infra.Data.csproj", "{DD4665BE-7AD5-4926-A8DD-BFACDDB9ED37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-Tests", "4-Tests", "{D0B68774-8A29-49E0-BABF-B2957DC90813}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HungryPizza.Integration.Tests", "HungryPizza.Integration.Tests\HungryPizza.Integration.Tests.csproj", "{D221FDA8-7A88-4A36-AAD6-BF2BEEBBB904}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +65,10 @@ Global
 		{DD4665BE-7AD5-4926-A8DD-BFACDDB9ED37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD4665BE-7AD5-4926-A8DD-BFACDDB9ED37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD4665BE-7AD5-4926-A8DD-BFACDDB9ED37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D221FDA8-7A88-4A36-AAD6-BF2BEEBBB904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D221FDA8-7A88-4A36-AAD6-BF2BEEBBB904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D221FDA8-7A88-4A36-AAD6-BF2BEEBBB904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D221FDA8-7A88-4A36-AAD6-BF2BEEBBB904}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +83,7 @@ Global
 		{9D8B68AF-BC69-4386-AA2C-51E815FD9D27} = {482E3DD4-803D-4656-8F05-AF39E160AAF2}
 		{59965E25-3FF9-4B80-9D57-C7B81900CE11} = {482E3DD4-803D-4656-8F05-AF39E160AAF2}
 		{DD4665BE-7AD5-4926-A8DD-BFACDDB9ED37} = {966F3ED4-FFFC-4CF9-A12D-4A473BBFA61F}
+		{D221FDA8-7A88-4A36-AAD6-BF2BEEBBB904} = {D0B68774-8A29-49E0-BABF-B2957DC90813}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6EA69E97-FA39-4A19-8624-D7DD5C4B9BF7}

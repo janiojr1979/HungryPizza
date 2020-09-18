@@ -35,7 +35,14 @@ namespace HungryPizza.API.Controllers
         {
             try
             {
-                return Ok(await _serviceClient.Get(email));
+                var client = await _serviceClient.Get(email);
+
+                if (client == null || client.Id == Guid.Empty)
+                {
+                    return BadRequest(new FailResponse($"Cliente não encontrado."));
+                }
+
+                return Ok(client);
             }
             catch (Exception e)
             {
@@ -53,7 +60,14 @@ namespace HungryPizza.API.Controllers
         {
             try
             {
-                return Ok(await _serviceClient.Get(id));
+                var client = await _serviceClient.Get(id);
+
+                if (client == null || client.Id == Guid.Empty)
+                {
+                    return BadRequest(new FailResponse($"Cliente não encontrado."));
+                }
+
+                return Ok(client);
             }
             catch (Exception e)
             {
@@ -88,7 +102,7 @@ namespace HungryPizza.API.Controllers
 
         // PUT api/<ClientController>/5        
         [ProducesResponseType(204)]
-        [ProducesResponseType(typeof(FailResponse), 400)]        
+        [ProducesResponseType(typeof(FailResponse), 400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] RequestClient client)

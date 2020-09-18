@@ -22,3 +22,7 @@
 /HungryPizza/HungryPizza.Infra.Data/obj
 /HungryPizza/HungryPizza.Infra.CrossCutting.IOC/bin/Debug/netcoreapp3.1
 /HungryPizza/HungryPizza.Infra.CrossCutting/bin/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Integration.Tests/bin/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Integration.Tests/obj
+/HungryPizza/HungryPizza.Tests/bin/Debug/netcoreapp3.1
+/HungryPizza/HungryPizza.Tests/obj
