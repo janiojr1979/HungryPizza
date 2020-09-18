@@ -20,6 +20,8 @@ namespace HungryPizza.Infra.CrossCutting.IOC
 
             //Service
             services.AddScoped<IServiceClient, ServiceClient>();
+            services.AddScoped<IServicePizza, ServicePizza>();
+            services.AddScoped<IServiceOrder, ServiceOrder>();
         }
 
         public static void AddDbConfig(this IServiceCollection services, IConfiguration configuration)

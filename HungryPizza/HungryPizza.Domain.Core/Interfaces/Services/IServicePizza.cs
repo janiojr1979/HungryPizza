@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HungryPizza.Domain.Core.Interfaces.Repositories
+namespace HungryPizza.Domain.Core.Interfaces.Services
 {
-    public interface IRepositoryPizza 
+    public interface IServicePizza
     {
         Task<IEnumerable<Pizza>> GetAll();
 

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace HungryPizza.Domain.Models
+namespace HungryPizza.API.VO
 {
-    public class Order
+    public class ResponseOrder
     {
         public Guid Id { get; set; }
-
-        public Guid? ClientId { get; set; }
 
         public string ClientName { get; set; }
 
@@ -23,6 +23,6 @@ namespace HungryPizza.Domain.Models
 
         public DateTime Date { get; set; }
 
-        public IEnumerable<OrderItem> Items { get; set; }
+        public IEnumerable<ResponseOrderItem> Items { get; set; }
     }
 }

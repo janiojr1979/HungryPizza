@@ -8,17 +8,12 @@ namespace HungryPizza.API.Common
     {
         public AutoMapping()
         {
-            //CreateMap<ExtratoRequest, ExtratoRequestCore>().BeforeMap((source, target) =>
-            //{
-            //    source.Agencia = source.Agencia.PadLeft(5, '0');
-            //});
-
-            //CreateMap<ExtratoRequest, ConciliacaoRequestCore>().BeforeMap((source, target) =>
-            //{
-            //    source.Agencia = source.Agencia.PadLeft(5, '0');
-            //});
-
             CreateMap<RequestClient, Client>();
+            CreateMap<RequestPizza, Pizza>();
+            CreateMap<RequestOrder, Order>();
+            CreateMap<RequestOrderItem, OrderItem>();
+            CreateMap<Order, ResponseOrder>();
+            CreateMap<OrderItem, ResponseOrderItem>();
         }
     }
 }

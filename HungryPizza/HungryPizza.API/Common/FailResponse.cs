@@ -21,6 +21,6 @@ namespace HungryPizza.API.Common
 
         public string Error { get; set; }
 
-        public Exception Exception { get; set; }
+        public object Exception { get; set; }
     }
 }

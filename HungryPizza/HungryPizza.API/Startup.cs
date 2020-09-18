@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using Newtonsoft;
 
 namespace HungryPizza.API
 {
@@ -27,7 +28,7 @@ namespace HungryPizza.API
             services.AddAutoMapper(typeof(AutoMapping));
             services.AddServices();
             services.AddDbConfig(Configuration);
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(); 
 
             //swagger
             services.AddSwaggerGen();

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
-namespace HungryPizza.Domain.Models
+namespace HungryPizza.API.VO
 {
-    public class Order
+    public class RequestOrder
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
 
         public Guid? ClientId { get; set; }
-
-        public string ClientName { get; set; }
 
         public string Email { get; set; }
 
@@ -21,8 +21,6 @@ namespace HungryPizza.Domain.Models
 
         public string City { get; set; }
 
-        public DateTime Date { get; set; }
-
-        public IEnumerable<OrderItem> Items { get; set; }
+        public IEnumerable<RequestOrderItem> Items { get; set; }
     }
 }

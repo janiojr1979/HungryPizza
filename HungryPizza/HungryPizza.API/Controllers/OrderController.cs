@@ -3,9 +3,11 @@ using HungryPizza.API.Common;
 using HungryPizza.API.VO;
 using HungryPizza.Domain.Core.Interfaces.Services;
 using HungryPizza.Domain.Models;
+using HungryPizza.Infra.CrossCutting.Tools;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,46 +16,28 @@ namespace HungryPizza.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientController : ControllerBase
+    public class OrderController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IServiceClient _serviceClient;
+        private readonly IServiceOrder _serviceOrder;
 
-        public ClientController(IServiceClient serviceClient, IMapper mapper)
+        public OrderController(IServiceOrder serviceOrder, IMapper mapper)
         {
             _mapper = mapper;
-            _serviceClient = serviceClient;
+            _serviceOrder = serviceOrder;
         }
 
-        // GET: api/<ClientController>
-        [ProducesResponseType(typeof(Client), 200)]
+        // GET: api/<OrderController>
+        [ProducesResponseType(typeof(Order), 200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
-        [HttpGet("email/{email}")]
-        public async Task<IActionResult> Get(string email)
-        {
-            try
-            {
-                return Ok(await _serviceClient.Get(email));
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new FailResponse(e.Message, e));
-            }
-        }
-
-        //GET api/<ClientController>/5
-        [ProducesResponseType(typeof(ResponseAdded), 200)]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(typeof(FailResponse), 400)]
-        [ProducesResponseType(typeof(FailResponse), 500)]
-        [HttpGet("id/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             try
             {
-                return Ok(await _serviceClient.Get(id));
+                return Ok(await _serviceOrder.Get(id));
             }
             catch (Exception e)
             {
@@ -61,21 +45,39 @@ namespace HungryPizza.API.Controllers
             }
         }
 
-        // POST api/<ClientController>
-        [ProducesResponseType(typeof(Client), 200)]
+        [ProducesResponseType(typeof(IEnumerable<Order>), 200)]
         [ProducesResponseType(204)]
-        [ProducesResponseType(typeof(FailResponse), 400)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] RequestClient client)
+        [HttpGet("history/{clientId}")]
+        public async Task<IActionResult> GetHistory(Guid clientId)
         {
             try
             {
-                client.Id = Guid.NewGuid();
+                return Ok(_mapper.Map<IEnumerable<ResponseOrder>>(await _serviceOrder.GetAllByClient(clientId)));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new FailResponse(e.Message, e));
+            }
+        }
 
-                if (await _serviceClient.Add(_mapper.Map<Client>(client)))
+        // POST api/<OrderController>
+        [HttpPost]
+        [ProducesResponseType(typeof(ResponseAdded), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(typeof(FailResponse), 400)]
+        [ProducesResponseType(typeof(FailResponse), 500)]
+        public async Task<IActionResult> Post([FromBody] RequestOrder order)
+        {
+            try
+            {
+                order.Id = Guid.NewGuid();
+                order.Items.ForEach(i => i.OrderId = order.Id);
+
+                if (await _serviceOrder.Add(_mapper.Map<Order>(order)))
                 {
-                    return Ok(new ResponseAdded() { Id = client.Id });
+                    return Ok(new ResponseAdded() { Id = order.Id });
                 }
 
                 return BadRequest(new FailResponse($"Erro ao cadastrar."));
@@ -86,23 +88,24 @@ namespace HungryPizza.API.Controllers
             }
         }
 
-        // PUT api/<ClientController>/5        
+        // PUT api/<OrderController>/5
+        [ProducesResponseType(typeof(ResponseAdded), 200)]
         [ProducesResponseType(204)]
-        [ProducesResponseType(typeof(FailResponse), 400)]        
+        [ProducesResponseType(typeof(FailResponse), 400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] RequestClient client)
+        public async Task<IActionResult> Put(Guid id, [FromBody] RequestOrder order)
         {
             try
             {
-                client.Id = id;
+                order.Id = id;
 
-                if (await _serviceClient.Update(_mapper.Map<Client>(client)))
+                if (await _serviceOrder.Update(_mapper.Map<Order>(order)))
                 {
-                    return NoContent();
+                    return Ok(new ResponseAdded() { Id = order.Id });
                 }
 
-                return BadRequest(new FailResponse($"Erro alterar o cadastro."));
+                return BadRequest(new FailResponse($"Erro ao cadastrar."));
             }
             catch (Exception e)
             {
@@ -110,7 +113,8 @@ namespace HungryPizza.API.Controllers
             }
         }
 
-        // DELETE api/<ClientController>/5        
+        // DELETE api/<OrderController>/5
+        [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(typeof(FailResponse), 400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
@@ -119,7 +123,7 @@ namespace HungryPizza.API.Controllers
         {
             try
             {
-                if (await _serviceClient.Delete(id))
+                if (await _serviceOrder.Delete(id))
                 {
                     return NoContent();
                 }

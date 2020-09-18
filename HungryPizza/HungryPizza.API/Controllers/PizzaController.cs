@@ -6,6 +6,7 @@ using HungryPizza.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,28 +15,28 @@ namespace HungryPizza.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientController : ControllerBase
+    public class PizzaController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IServiceClient _serviceClient;
+        private readonly IServicePizza _servicePizza;
 
-        public ClientController(IServiceClient serviceClient, IMapper mapper)
+        public PizzaController(IServicePizza servicePizza, IMapper mapper)
         {
             _mapper = mapper;
-            _serviceClient = serviceClient;
+            _servicePizza = servicePizza;
         }
 
-        // GET: api/<ClientController>
-        [ProducesResponseType(typeof(Client), 200)]
+        // GET: api/<PizzaController>
+        [ProducesResponseType(typeof(IEnumerable<Pizza>), 200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
-        [HttpGet("email/{email}")]
-        public async Task<IActionResult> Get(string email)
+        [HttpGet("all")]
+        public async Task<IActionResult> Get()
         {
             try
             {
-                return Ok(await _serviceClient.Get(email));
+                return Ok(await _servicePizza.GetAll());
             }
             catch (Exception e)
             {
@@ -43,17 +44,17 @@ namespace HungryPizza.API.Controllers
             }
         }
 
-        //GET api/<ClientController>/5
-        [ProducesResponseType(typeof(ResponseAdded), 200)]
+        // GET api/<PizzaController>/5
+        [ProducesResponseType(typeof(Pizza), 200)]
         [ProducesResponseType(204)]
-        [ProducesResponseType(typeof(FailResponse), 400)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
-        [HttpGet("id/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
             try
             {
-                return Ok(await _serviceClient.Get(id));
+                return Ok(await _servicePizza.Get(id));
             }
             catch (Exception e)
             {
@@ -61,21 +62,21 @@ namespace HungryPizza.API.Controllers
             }
         }
 
-        // POST api/<ClientController>
-        [ProducesResponseType(typeof(Client), 200)]
+        // POST api/<PizzaController>
+        [ProducesResponseType(typeof(ResponseAdded), 200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(typeof(FailResponse), 400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] RequestClient client)
+        public async Task<IActionResult> Post([FromBody] RequestPizza pizza)
         {
             try
             {
-                client.Id = Guid.NewGuid();
+                pizza.Id = Guid.NewGuid();
 
-                if (await _serviceClient.Add(_mapper.Map<Client>(client)))
+                if (await _servicePizza.Add(_mapper.Map<Pizza>(pizza)))
                 {
-                    return Ok(new ResponseAdded() { Id = client.Id });
+                    return Ok(new ResponseAdded() { Id = pizza.Id });
                 }
 
                 return BadRequest(new FailResponse($"Erro ao cadastrar."));
@@ -86,18 +87,19 @@ namespace HungryPizza.API.Controllers
             }
         }
 
-        // PUT api/<ClientController>/5        
+        // PUT api/<PizzaController>/5
+        [ProducesResponseType(200)]
         [ProducesResponseType(204)]
-        [ProducesResponseType(typeof(FailResponse), 400)]        
+        [ProducesResponseType(typeof(FailResponse), 400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] RequestClient client)
+        public async Task<IActionResult> Put(Guid id, [FromBody] RequestPizza pizza)
         {
             try
             {
-                client.Id = id;
+                pizza.Id = id;
 
-                if (await _serviceClient.Update(_mapper.Map<Client>(client)))
+                if (await _servicePizza.Update(_mapper.Map<Pizza>(pizza)))
                 {
                     return NoContent();
                 }
@@ -110,7 +112,8 @@ namespace HungryPizza.API.Controllers
             }
         }
 
-        // DELETE api/<ClientController>/5        
+        // DELETE api/<PizzaController>/5
+        [ProducesResponseType(200)]
         [ProducesResponseType(204)]
         [ProducesResponseType(typeof(FailResponse), 400)]
         [ProducesResponseType(typeof(FailResponse), 500)]
@@ -119,7 +122,7 @@ namespace HungryPizza.API.Controllers
         {
             try
             {
-                if (await _serviceClient.Delete(id))
+                if (await _servicePizza.Delete(id))
                 {
                     return NoContent();
                 }

@@ -41,15 +41,15 @@ namespace HungryPizza.Infra.Data.Repositories
             return await connection.QueryAsync<Pizza>("SELECT * FROM PIZZA (NOLOCK)");
         }
 
-        public async Task<IEnumerable<Pizza>> GetList(params Guid[] ids)
+        public async Task<Pizza> Get(Guid id)
         {
             using var connection = new SqlConnection(_connectionStrings.HungryPizzaDB);
-            return await connection.QueryAsync<Pizza>("SELECT * FROM PIZZA (NOLOCK) WHERE ID IN @IDS", new { IDS = ids });
+            return await connection.QueryFirstOrDefaultAsync<Pizza>("SELECT TOP 1 * FROM PIZZA (NOLOCK) WHERE ID = @ID", new { ID = id });
         }
 
         public async Task<bool> Update(Pizza pizza)
         {
-            var query = @"UPDATE SET NAME = @NAME, DESCRIPTION = @DESCRIPTION, PRICE = @PRICE WHERE ID = @ID";
+            var query = @"UPDATE PIZZA SET NAME = @NAME, DESCRIPTION = @DESCRIPTION, PRICE = @PRICE WHERE ID = @ID";
             using var connection = new SqlConnection(_connectionStrings.HungryPizzaDB);
 
             return (await connection.ExecuteAsync(query, new { ID = pizza.Id, NAME = pizza.Name, DESCRIPTION = pizza.Description, PRICE = pizza.Price })) > 0;
